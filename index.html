@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الحجز</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <!-- واجهة تسجيل الدخول -->
+    <div id="login-container">
+        <h2>تسجيل الدخول</h2>
+        <form id="login-form">
+            <label for="username">اسم المستخدم:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">تسجيل الدخول</button>
+        </form>
+    </div>
+
+    <!-- واجهة الترحيب -->
+    <div id="welcome-container" class="hidden">
+        <h2>مرحبا بك في نظام الحجز</h2>
+        <button id="add-booking-btn">إضافة حجز جديد</button>
+        <button id="view-report-btn">عرض التقرير</button>
+        <button id="add-company-btn">إضافة شركة جديدة</button>
+        <button id="add-hotel-btn">إضافة فندق جديد</button>
+        <button id="logout-btn">الخروج من البرنامج</button>
+    </div>
+
+    <!-- واجهة إضافة حجز -->
+    <div id="booking-container" class="hidden">
+        <h2>إضافة حجز جديد</h2>
+        <form id="booking-form">
+            <label for="travel-date">تاريخ الرحلة:</label>
+            <input type="date" id="travel-date" required>
+
+            <label for="trip-type">نوع الرحلة:</label>
+            <select id="trip-type" required>
+                <option value="sea-line-1">سي لاين 1</option>
+                <option value="sea-line-2">سي لاين 2</option>
+            </select>
+
+            <label for="trip-time">وقت الرحلة:</label>
+            <select id="trip-time" required>
+                <option value="09:00">09:00</option>
+                <option value="10:30">10:30</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:30">16:30</option>
+            </select>
+
+            <label for="company-name">اسم الشركة:</label>
+            <select id="company-name" required>
+                <option value="">اختر الشركة</option>
+                <!-- شركات سيتم إضافتها هنا -->
+            </select>
+
+            <label for="hotel-name">اسم الفندق:</label>
+            <select id="hotel-name" required>
+                <option value="">اختر الفندق</option>
+                <!-- فنادق سيتم إضافتها هنا -->
+            </select>
+
+            <label for="room-number">رقم الغرفة:</label>
+            <input type="text" id="room-number" required>
+
+            <label for="adults">البالغين:</label>
+            <input type="number" id="adults" min="0" required>
+
+            <label for="children">الأطفال:</label>
+            <input type="number" id="children" min="0" required>
+
+            <label for="infants">الرضع:</label>
+            <input type="number" id="infants" min="0" required>
+
+            <label for="notes">الملاحظات:</label>
+            <textarea id="notes" rows="4"></textarea>
+
+            <button type="submit">إضافة الحجز</button>
+        </form>
+        <button id="back-to-welcome-btn">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
+    <!-- واجهة التقرير -->
+    <div id="report-container" class="hidden">
+        <h2>تقرير بانوراما صب مارين</h2>
+
+        <!-- حاوية الفلاتر -->
+        <div class="filter-container">
+            <label for="filter-date">تاريخ الرحلة:</label>
+            <input type="date" id="filter-date">
+
+            <label for="filter-trip-type">نوع الرحلة:</label>
+            <select id="filter-trip-type">
+                <option value="">جميع الأنواع</option>
+                <option value="sea-line-1">سي لاين 1</option>
+                <option value="sea-line-2">سي لاين 2</option>
+            </select>
+
+            <label for="filter-trip-time">وقت الرحلة:</label>
+            <select id="filter-trip-time">
+                <option value="">جميع الأوقات</option>
+                <option value="09:00">09:00</option>
+                <option value="10:30">10:30</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:30">16:30</option>
+            </select>
+
+            <button id="apply-filters-btn">تطبيق الفلاتر</button>
+        </div>
+
+        <!-- جدول التقرير -->
+        <table id="report-table">
+            <thead>
+                <tr>
+                    <th>تاريخ الرحلة</th>
+                    <th>نوع الرحلة</th>
+                    <th>وقت الرحلة</th>
+                    <th>الشركة</th>
+                    <th>الفندق</th>
+                    <th>رقم الغرفة</th>
+                    <th>البالغين</th>
+                    <th>الأطفال</th>
+                    <th>الرضع</th>
+                    <th>ملاحظات</th>
+                    <th>التحكم</th>
+                </tr>
+            </thead>
+            <tbody id="report-body">
+                <!-- بيانات التقرير ستضاف هنا -->
+            </tbody>
+        </table>
+
+        <button id="print-report-btn">طباعة التقرير</button>
+        <button id="download-report-btn">تحميل التقرير</button>
+        <button id="back-to-welcome-report-btn">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
+    <!-- نافذة إضافة شركة جديدة -->
+    <div id="add-company-container" class="hidden">
+        <h2>إضافة شركة جديدة</h2>
+        <form id="company-form">
+            <label for="company-name-input">اسم الشركة:</label>
+            <input type="text" id="company-name-input" required>
+            <button type="submit">إضافة الشركة</button>
+        </form>
+        <button id="back-to-welcome-from-company">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
+    <!-- نافذة إضافة فندق جديد -->
+    <div id="add-hotel-container" class="hidden">
+        <h2>إضافة فندق جديد</h2>
+        <form id="hotel-form">
+            <label for="hotel-name-input">اسم الفندق:</label>
+            <input type="text" id="hotel-name-input" required>
+            <button type="submit">إضافة الفندق</button>
+        </form>
+        <button id="back-to-welcome-from-hotel">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
